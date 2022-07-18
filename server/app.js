@@ -7,6 +7,8 @@ const sanitize = require('express-mongo-sanitize');
 const cookieParser = require('cookie-parser');
 
 const errorHandler = require('./tools/error-handler');
+const authRouter = require('./routes/auth-route');
+const memberRouter = require('./routes/member-route');
 
 require('dotenv').config();
 require('./db');
@@ -20,6 +22,9 @@ app.use(sanitize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use('/auth', authRouter);
+app.use('/member', memberRouter)
 
 app.use(errorHandler);
 
