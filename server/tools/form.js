@@ -1,3 +1,5 @@
+const AppError = require('./app-error');
+
 exports.clean = (form, allowKeyList, notValidateKeyList = []) => {
     // clean only allow key
     for (const key in form) {
@@ -16,17 +18,17 @@ exports.clean = (form, allowKeyList, notValidateKeyList = []) => {
 
         // if null. undefined, but not 0
         else if (!value && value !== 0) {
-            throw new Error(`${key} is require!`);
+            throw new AppError(400, `${key} is require!`);
         }
 
         // if empty Array []
         else if (Array.isArray(value) && !value.length) {
-            throw new Error(`${key} is require!`)
+            throw new AppError(400, `${key} is require!`)
         }
 
         // if empty Object {}
         else if (typeof value === 'object' && !Object.keys(value).length) {
-            throw new Error(`${key} is require!`)
+            throw new AppError(400, `${key} is require!`)
         }
     })
 }
