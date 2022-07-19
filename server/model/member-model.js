@@ -23,6 +23,18 @@ const memberSchema = new mongoose.Schema({
     avatar: {
         type: String,
     },
+    followingList: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'member'
+    },
+    followerList: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'member'
+    },
+    // notificationList: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'notification'
+    // },
     accessToken: {
         type: String,
         select: false

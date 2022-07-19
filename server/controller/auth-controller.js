@@ -8,7 +8,7 @@ const generateToken = async payload => {
     return await jwt.sign(
         payload,
         process.env.JWT_SECRET,
-        { expiresIn: '10s' }
+        { expiresIn: '10m' }
     )
 }
 
@@ -77,7 +77,7 @@ exports.getLoginMember = catchAsync(async (req, res, next) => {
     if (!accessToken) throw new AppError(401, 'token not found! you are not login yet, please login');
 
     jwt.verify(accessToken, process.env.JWT_SECRET, err => {
-        if (err) throw new AppError(400, `token error: ${err.message}`);
+        if (err) throw new AppError(400, `authentication token error: ${err.message}`);
     })
 
     const member = await Member.findOne({ accessToken });
