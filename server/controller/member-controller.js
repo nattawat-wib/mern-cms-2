@@ -1,9 +1,8 @@
 const Member = require('./../model/member-model');
 const { catchAsync } = require('./../tools/catch-async');
+const { clean } = require('./../tools/form');
 
 exports.getAll = catchAsync(async (req, res, next) => {
-    console.log("req.member", req.member);
-
     const member = await Member.find().sort({ createdAt: -1 });
 
     res.status(200).json({
@@ -12,3 +11,19 @@ exports.getAll = catchAsync(async (req, res, next) => {
         data: { member }
     })
 });
+
+exports.updateMe = catchAsync(async (req, res, next) => {
+    clean(req.body, ['name']);
+
+    const member = await Member.findOneAndUpdate(
+        { username: req.member.username },
+        req.body,
+        { new: true }
+    );
+
+    res.status(200).json({
+        status: 'success',
+        msg: 'update member successfully',
+        data: { member }
+    })
+})

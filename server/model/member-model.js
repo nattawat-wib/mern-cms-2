@@ -23,7 +23,15 @@ const memberSchema = new mongoose.Schema({
     avatar: {
         type: String,
     },
-    accessToken : {
+    accessToken: {
+        type: String,
+        select: false
+    },
+    adminToken: {
+        type: String,
+        select: false
+    },
+    resetPasswordToken: {
         type: String,
         select: false
     },
@@ -45,7 +53,7 @@ const generateId = async () => {
 
 memberSchema.pre('save', async function () {
     if (this.isNew) this.username = await generateId();
-    
+
     if (this.isModified('password')) {
         this.password = await bcrypt.hash(this.password, 12);
     }

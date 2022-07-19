@@ -86,3 +86,18 @@ exports.getLoginMember = catchAsync(async (req, res, next) => {
     req.member = member;
     next();
 })
+
+// exports.getLoginAdmin = catchAsync(async (req, res, next) => {
+//     const { adminToken } = req.cookies;
+//     if (!adminToken) throw new AppError(401, 'token not found! you are not login yet, please login');
+
+//     jwt.verify(adminToken, process.env.JWT_SECRET, err => {
+//         if (err) throw new AppError(400, `token error: ${err.message}`);
+//     })
+
+//     const admin = await Member.findOne({ adminToken });
+//     if (!admin) throw new AppError(404, 'admin not found with this token');
+
+//     req.admin = admin;
+//     next();
+// })
