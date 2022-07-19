@@ -9,7 +9,7 @@ const memberSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
@@ -17,13 +17,15 @@ const memberSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        select: false
     },
     avatar: {
         type: String,
     },
     accessToken : {
-        type: String
+        type: String,
+        select: false
     },
     ...dateTimeKey
 },
