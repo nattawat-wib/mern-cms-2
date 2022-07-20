@@ -1,18 +1,28 @@
 const Category = require('./../model/category-model');
 const AppError = require('../tools/app-error');
 const { catchAsync } = require('../tools/catch-async');
-const { clean } = require('../tools/form');
+const { clean, isExist } = require('../tools/validate');
+const { findByIdAndUpdate } = require('../model/member-model');
 
 exports.add = catchAsync(async (req, res) => {
-    clean(['name', 'title', 'desc']);
+    clean(req.body, ['nameTh', 'nameEn', 'titleTh', 'titleEn', 'descTh', 'descEn', 'slug']);
 
-    // const category = await Category.findOne();
+    req.body.slug = req.body.slug.split(' ').join('-');
 
-    throw new AppError(400, 'this name is already exist');
+    await isExist(req.body, Category, ['nameTh', 'nameEn']);
+    console.log(4);
+
+    const category = await Category.create(req.body);
+
+    res.status(200).json({
+        status: 'success',
+        msg: 'create category successfully',
+        data: { category }
+    })
 })
 
 exports.getAll = catchAsync(async (req, res) => {
-    const category = await Category.find();
+    const category = await Category.find().sort({ createdAt: -1 });
 
     res.status(200).json({
         status: 'success',
@@ -20,4 +30,27 @@ exports.getAll = catchAsync(async (req, res) => {
         msg: 'all category',
         data: { category }
     })
+})
+
+exports.delete = catchAsync(async (req, res) => {
+    const category = await Category.findById(req.params._id);
+    if(!category) throw new AppError(404, 'category not found whit this ID');
+    
+    await Category.deleteOne({ _id: category._id });
+
+    res.status(200).json({
+        status: 'success',
+        msg: 'delete category successfully'
+    })
+})
+
+exports.update = catchAsync(async (req, res) => {
+    const category = await Category.findById(req.params._id);
+    if(!category) throw new AppError(404, 'category not found whit this ID');
+
+    const allowKeyList = ['nameTh', 'nameEn', 'titleTh', 'titleEn', 'descTh', 'descEn', 'slug'];
+    clean(req.body, allowKeyList, allowKeyList)
+
+    const updateCategory = findByIdAndUpdate(category._id, req.body);
+
 })

@@ -1,6 +1,6 @@
 const Member = require('./../model/member-model');
 const { catchAsync } = require('./../tools/catch-async');
-const { clean } = require('./../tools/form');
+const { clean } = require('../tools/validate');
 const AppError = require('../tools/app-error');
 const jwt = require('jsonwebtoken');
 

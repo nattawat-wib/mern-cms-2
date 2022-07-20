@@ -8,4 +8,8 @@ router.route('/')
     .post(categoryController.add)
     .get(categoryController.getAll)
 
+router.route('/:_id')
+    .patch(categoryController.update)
+    .delete(categoryController.delete)
+
 module.exports = router;

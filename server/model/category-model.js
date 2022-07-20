@@ -2,20 +2,31 @@ const mongoose = require('mongoose');
 const { dateTimeGenerator, timestamp, dateTimeKey } = require('../tools/schema-temp');
 
 const categorySchema = new mongoose.Schema({
-    creator: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'member',
-        required: true
-    },
-    name: {
+    nameTh: {
         type: String,
         required: true
     },
-    title: {
+    nameEn: {
         type: String,
         required: true
     },
-    desc: {
+    slug: {
+        type: String,
+        required: true
+    },
+    titleTh: {
+        type: String,
+        required: true
+    },
+    titleEn: {
+        type: String,
+        required: true
+    },
+    descTh: {
+        type: String,
+        required: true
+    },
+    descEn: {
         type: String,
         required: true
     },

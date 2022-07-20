@@ -1,6 +1,6 @@
 const AppError = require('../tools/app-error');
 const { catchAsync } = require('../tools/catch-async');
-const { clean } = require('../tools/form');
+const { clean } = require('../tools/validate');
 const Post = require('./../model/post-model');
 
 exports.add = catchAsync(async (req, res) => {

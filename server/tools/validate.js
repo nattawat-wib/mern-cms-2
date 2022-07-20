@@ -32,3 +32,14 @@ exports.clean = (form, allowKeyList, notValidateKeyList = []) => {
         }
     })
 }
+
+exports.isExist = async (form, model, checkKeyList) => {
+    console.log(1);
+    await checkKeyList.forEach(async key => {
+        console.log(2);
+        if (await model.findOne({ [key]: form[key] })) {
+            console.log(3);
+            throw new AppError(400, `${key} is already taken`)
+        }
+    })
+}
