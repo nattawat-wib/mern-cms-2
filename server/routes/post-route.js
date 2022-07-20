@@ -8,7 +8,7 @@ router.route('/')
     .get(postController.getAll)
     .post(postController.add)
 
-router.route('/:url')
+router.route('/:id')
     .patch(postController.update)
     .delete(postController.delete)
 
