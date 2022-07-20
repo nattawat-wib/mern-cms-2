@@ -10,6 +10,7 @@ const errorHandler = require('./tools/error-handler');
 const authRouter = require('./routes/auth-route');
 const memberRouter = require('./routes/member-route');
 const postRouter = require('./routes/post-route');
+const categoryRouter = require('./routes/category-route');
 
 require('dotenv').config();
 require('./db');
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 app.use('/member', memberRouter);
 app.use('/post', postRouter);
+app.use('/category', categoryRouter);
 
 app.use(errorHandler);
 

@@ -34,9 +34,12 @@ exports.getAll = catchAsync(async (req, res) => {
 })
 
 exports.update = catchAsync(async (req, res) => {
-    clean(req.body, ['titleTh', 'titleEn', 'contentTh', 'contentEn', 'category', 'tag', 'url'], ['tag']);
+    const allowKeyList = ['titleTh', 'titleEn', 'contentTh', 'contentEn', 'category', 'tag', 'url'];
+    clean(req.body, allowKeyList, allowKeyList);
 
-    const post = await Post.findOne({ id: req.params.id });
+    if(!Object.keys(req.body).length) throw new AppError(404, 'not found any key for update');
+
+    const post = await Post.findById(req.params._id);
     if (!post) throw new AppError(404, 'post not found with this id');
 
     // check are you owner of this post
@@ -44,16 +47,18 @@ exports.update = catchAsync(async (req, res) => {
         throw new AppError(400, 'cannot delete, you are not owner of this post');
     }
 
-    await Post.updateOne({ id: post._id }, { ...req.body });
+    const updatePost = await Post.findByIdAndUpdate(post._id, { ...req.body }, { new: true });
 
     res.status(200).json({
         status: 'success',
-        msg: 'delete successfully'
+        msg: 'update post successfully',
+        data: { post: updatePost }
     })
 })
 
 exports.delete = catchAsync(async (req, res) => {
-    const post = await Post.findOne({ id: req.params.id });
+    const post = await Post.findById(req.params._id);
+
     if (!post) throw new AppError(404, 'post not found with this id');
 
     // check are you owner of this post
