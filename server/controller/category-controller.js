@@ -2,7 +2,6 @@ const Category = require('./../model/category-model');
 const AppError = require('../tools/app-error');
 const { catchAsync } = require('../tools/catch-async');
 const { clean, isExist } = require('../tools/validate');
-const { findByIdAndUpdate } = require('../model/member-model');
 
 exports.add = catchAsync(async (req, res) => {
     clean(req.body, ['nameTh', 'nameEn', 'titleTh', 'titleEn', 'descTh', 'descEn', 'slug']);

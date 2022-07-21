@@ -37,7 +37,6 @@ exports.register = catchAsync(async (req, res) => {
 })
 
 exports.login = catchAsync(async (req, res) => {
-
     clean(req.body, ['email', 'password']);
 
     const member = await Member.findOne({ email: req.body.email }).select('+password');
@@ -77,7 +76,7 @@ exports.getLoginMember = catchAsync(async (req, res, next) => {
     if (!accessToken) throw new AppError(401, 'token not found! you are not login yet, please login');
 
     jwt.verify(accessToken, process.env.JWT_SECRET, err => {
-        if (err) throw new AppError(400, `authentication token error: ${err.message}`);
+        if (err) throw new AppError(401, `Authorization Token Error: ${err.message}`);
     })
 
     const member = await Member.findOne({ accessToken });
