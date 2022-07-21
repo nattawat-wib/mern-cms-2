@@ -22,13 +22,13 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // tag: {
-    //     type: [mongoose.Schema.Types.ObjectId],
-    // },
-    // category: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true
-    // },
+    tag: {
+        type: [mongoose.Schema.Types.ObjectId],
+    },
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     url: {
         type: String,
         required: true
