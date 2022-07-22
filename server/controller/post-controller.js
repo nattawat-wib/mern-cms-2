@@ -1,12 +1,18 @@
+const Post = require('./../model/post-model');
 const AppError = require('../tools/app-error');
 const { catchAsync } = require('../tools/catch-async');
 const { clean } = require('../tools/validate');
-const Post = require('./../model/post-model');
 
 exports.add = catchAsync(async (req, res) => {
-    clean(req.body, ['titleTh', 'titleEn', 'contentTh', 'contentEn', 'category', 'tag', 'url'], ['tag']);
+    clean(req.body,
+        ['titleTh', 'titleEn', 'contentTh', 'contentEn', 'category', 'tag', 'url'],
+        ['tag']
+    );
 
     req.body.url = req.body.url.split(' ').join('-');
+
+    // is tag duplicate
+    
 
     const isUrlExist = await Post.findOne({ url: req.body.url });
     if (isUrlExist) throw new AppError(400, 'this url is already taken');
@@ -24,11 +30,15 @@ exports.add = catchAsync(async (req, res) => {
 })
 
 exports.getAll = catchAsync(async (req, res) => {
-    const post = await Post.find();
+    const post = await Post
+        .find()
+        .sort({ createdAt: -1 })
+        .populate('tag category');
 
     res.status(200).json({
         status: 'success',
         length: post.length,
+        msg: 'all post',
         data: { post }
     })
 })
@@ -37,7 +47,7 @@ exports.update = catchAsync(async (req, res) => {
     const allowKeyList = ['titleTh', 'titleEn', 'contentTh', 'contentEn', 'category', 'tag', 'url'];
     clean(req.body, allowKeyList, allowKeyList);
 
-    if(!Object.keys(req.body).length) throw new AppError(404, 'not found any key for update');
+    if (!Object.keys(req.body).length) throw new AppError(404, 'not found any key for update');
 
     const post = await Post.findById(req.params._id);
     if (!post) throw new AppError(404, 'post not found with this id');

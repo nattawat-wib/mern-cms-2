@@ -24,9 +24,11 @@ const postSchema = new mongoose.Schema({
     },
     tag: {
         type: [mongoose.Schema.Types.ObjectId],
+        ref: 'tag',
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
         required: true
     },
     url: {
