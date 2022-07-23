@@ -6,6 +6,14 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
+    thumbnail: {
+        type: String,
+        required: true
+    },
+    banner: {
+        type: String,
+        required: true
+    },    
     titleTh: {
         type: String,
         required: true

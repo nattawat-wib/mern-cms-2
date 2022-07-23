@@ -1,4 +1,4 @@
-const AppError = require('./app-error');
+const { sendError } = require('./response');
 
 exports.clean = (form, allowKeyList, notValidateKeyList = []) => {
     // clean only allow key
@@ -18,25 +18,37 @@ exports.clean = (form, allowKeyList, notValidateKeyList = []) => {
 
         // if null. undefined, but not 0
         else if (!value && value !== 0) {
-            throw new AppError(400, `${key} is require!`);
+            sendError(400, `${key} is require!`);
         }
 
         // if empty Array []
         else if (Array.isArray(value) && !value.length) {
-            throw new AppError(400, `${key} is require!`)
+            sendError(400, `${key} is require!`)
         }
 
         // if empty Object {}
         else if (typeof value === 'object' && !Object.keys(value).length) {
-            throw new AppError(400, `${key} is require!`)
+            sendError(400, `${key} is require!`)
         }
     })
 }
 
 exports.isExist = async (form, uniqueKey, model, checkKeyList) => {
     for (const key of checkKeyList) {
-        if (await model.findOne({ [key]: form[key], _id: { $ne: uniqueKey } })) {
-            throw new AppError(400, `Duplicate Error: ${key} is already taken`)
+        let label = key;
+        let query = {
+            [key]: form[key],
+            _id: { $ne: uniqueKey }
+        };
+
+        // if key is object format value
+        if (typeof key === 'object' && key !== null && !Array.isArray(key)) {
+            query = { key, _id: { $ne: uniqueKey } }
+            label = Object.keys(key)[0];
+        }
+
+        if (await model.findOne(query)) {
+            sendError(400, `Duplicate Error: ${label} is already taken`)
         }
     }
 }
