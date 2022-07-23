@@ -1,6 +1,6 @@
 const Tag = require('./../model/tag-model');
-const { sendError, sendSuccess } = require('../tools/response');
-const { catchAsync } = require('../tools/catch-async');
+const { resError, resSuccess } = require('../tools/response');
+const catchAsync = require('../tools/catch-async');
 const { clean, isExist } = require('../tools/validate');
 
 exports.add = catchAsync(async (req, res) => {
@@ -31,7 +31,7 @@ exports.getAll = catchAsync(async (req, res) => {
 
 exports.delete = catchAsync(async (req, res) => {
     const tag = await Tag.findById(req.params._id);
-    if (!tag) sendError(404, 'tag not found whit this ID');
+    if (!tag) resError(404, 'tag not found whit this ID');
 
     await Tag.deleteOne({ _id: tag._id });
 
@@ -43,7 +43,7 @@ exports.delete = catchAsync(async (req, res) => {
 
 exports.update = catchAsync(async (req, res) => {
     const tag = await Tag.findById(req.params._id);
-    if (!tag) sendError(404, 'tag not found whit this ID');
+    if (!tag) resError(404, 'tag not found whit this ID');
 
     const allowKeyList = ['nameTh', 'nameEn', 'titleTh', 'titleEn', 'descTh', 'descEn', 'slug'];
     clean(req.body, allowKeyList, allowKeyList);

@@ -10,11 +10,11 @@ class AppError extends Error {
     }
 }
 
-const sendError = (statusCode, message) => {
+const resError = (statusCode, message) => {
     throw new AppError(statusCode, message)
 }
 
-const sendSuccess = (res, statusCode, msg, data, length) => {
+const resSuccess = (res, statusCode, msg, data, length) => {
     const json = {
         status: 'success',
         msg,
@@ -27,5 +27,5 @@ const sendSuccess = (res, statusCode, msg, data, length) => {
     res.status(statusCode).json(json)
 }
 
-exports.sendError = sendError
-exports.sendSuccess = sendSuccess
+exports.resError = resError
+exports.resSuccess = resSuccess

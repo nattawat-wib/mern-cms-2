@@ -12,6 +12,8 @@ const memberRouter = require('./routes/member-route');
 const postRouter = require('./routes/post-route');
 const categoryRouter = require('./routes/category-route');
 const tagRouter = require('./routes/tag-route');
+const savePostRouter = require('./routes/save-post-route');
+const daftRouter = require('./routes/daft-route');
 
 require('dotenv').config();
 require('./db');
@@ -31,6 +33,8 @@ app.use('/member', memberRouter);
 app.use('/post', postRouter);
 app.use('/category', categoryRouter);
 app.use('/tag', tagRouter);
+app.use('/save-post', savePostRouter);
+app.use('/daft', daftRouter)
 
 app.use(errorHandler);
 

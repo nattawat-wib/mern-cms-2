@@ -1,7 +1,7 @@
 const Member = require('./../model/member-model');
-const { catchAsync } = require('./../tools/catch-async');
+const catchAsync = require('./../tools/catch-async');
 const { clean } = require('./../tools/validate');
-const { sendError, sendSuccess } = require('../tools/response');
+const { resError, resSuccess } = require('../tools/response');
 
 exports.getAll = catchAsync(async (req, res, next) => {
     const member = await Member.find().sort({ createdAt: -1 });

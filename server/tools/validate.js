@@ -1,4 +1,4 @@
-const { sendError } = require('./response');
+const { resError } = require('./response');
 
 exports.clean = (form, allowKeyList, notValidateKeyList = []) => {
     // clean only allow key
@@ -18,17 +18,17 @@ exports.clean = (form, allowKeyList, notValidateKeyList = []) => {
 
         // if null. undefined, but not 0
         else if (!value && value !== 0) {
-            sendError(400, `${key} is require!`);
+            resError(400, `${key} is require!`);
         }
 
         // if empty Array []
         else if (Array.isArray(value) && !value.length) {
-            sendError(400, `${key} is require!`)
+            resError(400, `${key} is require!`)
         }
 
         // if empty Object {}
         else if (typeof value === 'object' && !Object.keys(value).length) {
-            sendError(400, `${key} is require!`)
+            resError(400, `${key} is require!`)
         }
     })
 }
@@ -48,7 +48,7 @@ exports.isExist = async (form, uniqueKey, model, checkKeyList) => {
         }
 
         if (await model.findOne(query)) {
-            sendError(400, `Duplicate Error: ${label} is already taken`)
+            resError(400, `Duplicate Error: ${label} is already taken`)
         }
     }
 }

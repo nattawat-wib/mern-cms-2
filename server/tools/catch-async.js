@@ -1,6 +1,6 @@
 const { UndoUploadFile } = require("./multer");
 
-exports.catchAsync = fn => (req, res, next) => {
+module.exports = catchAsync = fn => (req, res, next) => {
     fn(req, res, next).catch(err => {
         
         if(req.files) UndoUploadFile(req.files)
@@ -8,3 +8,4 @@ exports.catchAsync = fn => (req, res, next) => {
         next(err)
     });
 }
+

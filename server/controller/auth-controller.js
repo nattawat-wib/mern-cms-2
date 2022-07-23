@@ -1,7 +1,8 @@
 const Member = require('./../model/member-model');
-const { catchAsync } = require('./../tools/catch-async');
+const savePost = require('./../model/save-post-model');
+const catchAsync = require('./../tools/catch-async');
 const { clean } = require('../tools/validate');
-const { sendError, sendSuccess } = require('../tools/response');
+const { resError, resSuccess } = require('../tools/response');
 const jwt = require('jsonwebtoken');
 
 const generateToken = async payload => {
@@ -16,19 +17,22 @@ exports.register = catchAsync(async (req, res) => {
     clean(req.body, ['name', 'password', 'passwordConfirm', 'email']);
 
     if (req.body.password.length < 6) {
-        sendError(400, 'password and password confirm require at least 6 character');
+        resError(400, 'password and password confirm require at least 6 character');
     }
 
     const isEmailExist = await Member.findOne({ email: req.body.email });
-    if (isEmailExist) sendError(400, 'this email is already taken');
+    if (isEmailExist) resError(400, 'this email is already taken');
 
     if (req.body.password !== req.body.passwordConfirm) {
-        sendError(400, 'password and password confirm should be match');
+        resError(400, 'password and password confirm should be match');
     }
 
     req.body.passwordConfirm = undefined;
 
     const member = await Member.create(req.body);
+    await savePost.create({
+        owner: member._id
+    })
 
     res.status(201).json({
         status: 'success',
@@ -40,10 +44,10 @@ exports.login = catchAsync(async (req, res) => {
     clean(req.body, ['email', 'password']);
 
     const member = await Member.findOne({ email: req.body.email }).select('+password');
-    if (!member) sendError(404, 'member not found with this email');
+    if (!member) resError(404, 'member not found with this email');
 
     if (!await member.isPasswordCorrect(req.body.password, member.password)) {
-        sendError(400, 'password or email is not correct');
+        resError(400, 'password or email is not correct');
     }
 
     const token = await generateToken({ email: member.email });
@@ -73,14 +77,14 @@ exports.logout = catchAsync(async (req, res) => {
 
 exports.getLoginMember = catchAsync(async (req, res, next) => {
     const { accessToken } = req.cookies;
-    if (!accessToken) sendError(401, 'token not found! you are not login yet, please login');
+    if (!accessToken) resError(401, 'token not found! you are not login yet, please login');
 
     jwt.verify(accessToken, process.env.JWT_SECRET, err => {
-        if (err) sendError(401, `Authorization Token Error: ${err.message}`);
+        if (err) resError(401, `Authorization Token Error: ${err.message}`);
     })
 
     const member = await Member.findOne({ accessToken });
-    if (!member) sendError(404, 'member not found with this token');
+    if (!member) resError(404, 'member not found with this token');
 
     req.member = member;
     next();
@@ -88,14 +92,14 @@ exports.getLoginMember = catchAsync(async (req, res, next) => {
 
 // exports.getLoginAdmin = catchAsync(async (req, res, next) => {
 //     const { adminToken } = req.cookies;
-//     if (!adminToken) sendError(401, 'token not found! you are not login yet, please login');
+//     if (!adminToken) resError(401, 'token not found! you are not login yet, please login');
 
 //     jwt.verify(adminToken, process.env.JWT_SECRET, err => {
-//         if (err) sendError(400, `token error: ${err.message}`);
+//         if (err) resError(400, `token error: ${err.message}`);
 //     })
 
 //     const admin = await Member.findOne({ adminToken });
-//     if (!admin) sendError(404, 'admin not found with this token');
+//     if (!admin) resError(404, 'admin not found with this token');
 
 //     req.admin = admin;
 //     next();
