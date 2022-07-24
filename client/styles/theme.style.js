@@ -59,14 +59,17 @@ const light = responsiveFontSizes(createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#66BFBF',
-            contrastText: '#fff'
+            main: '#121212',
+            contrastText: '#eeeeee'
         },
         iconButton: {
             bg: '#eeeeee',
             color: '#9e9e9e'
             // bg: defaultMui.palette.grey['700'],
             // color: defaultMui.palette.grey['400']
+        },
+        nav: {
+            bg: 'rgba(255, 255, 255, .5)'
         }
     },
 }))
@@ -76,13 +79,16 @@ const dark = responsiveFontSizes(createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#66BFBF',
-            contrastText: '#fff'
+            main: '#eeeeee',
+            contrastText: '#121212'
         },
         iconButton: {
             bg: '#9e9e9e50',
             color: '#eeeeee'
-        }
+        },
+        nav: {
+            bg: 'rgba(0, 0, 0, .5)'
+        }        
     },
 }))
 

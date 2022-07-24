@@ -5,7 +5,7 @@ import theme from './../styles/theme.style';
 const ThemeContext = createContext();
 
 const ThemeContextProvider = ({ children }) => {
-    const [isDarkTheme, setIsDarkTheme] = useState(true);
+    const [isDarkTheme, setIsDarkTheme] = useState(false);
     // const [isDarkTheme, setIsDarkTheme] = useState(JSON.parse(localStorage.getItem('isDarkTheme')) || false);
 
     useEffect(() => {

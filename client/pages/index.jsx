@@ -1,64 +1,37 @@
-import { Button, TextField, Stack, InputAdornment, Container, Typography, Grid } from '@mui/material'
-import { DatePicker } from '@mui/lab';
+import { Avatar, Button, Box, TextField, Stack, InputAdornment, Container, Typography, Grid } from '@mui/material'
+
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 import Link from 'next/Link';
-
 import axios from '../utils/axios';
-import { dialogConfirm } from '../components/dialog-confirm';
-import { MotionButton, MotionPaper } from '../components/motion-component';
+
+import { TrendingNumber } from './../styles/index.style';
 
 export default function Home() {
 
-    const call = async () => {
-        dialogConfirm(true, () => {
-            axios('get', 'https://dog.ceo/api/breeds/image/random')
-            alert('confirm')
-        });
-    }
-
     return (
         <>
-            <Container maxWidth='md' sx={{ my: 4 }}>
-                <TextField label='username' />
-                <Stack alignItems='end'>
-                    <TextField variant='standard' label='username' sx={{ ml: 1 }} />
+            <Container sx={{ my: 4 }}>
+                <Stack alignItems='center'>
+                    <TrendingUpIcon sx={{ mr: 1 }} />
+                    <Typography className='font-bold'> TRENDING ON MEDIUM </Typography>
                 </Stack>
-                <br />
-                <br />
-                <MotionButton
-                    variant='contained'
-                    // startIcon={}
-                    onClick={call}
-                > Call API </MotionButton>
-
-                <br />
-                <br />
-
-                <Grid container spacing={4}>
+                <Grid container>
                     {
-                        new Array(3).fill(1).map((item, i) => {
+                        new Array(6).fill(1).map((post, i) => {
                             return (
-                                <Grid item xs={12} sm={6} md={4} key={i}>
-                                    <MotionPaper sx={{ p: 2 }} elevation={4} >
-                                        <Typography variant='h5' > Title </Typography>
-                                        <Typography>
-                                            optional SKIPPING OPTIONAL DEPENDENCY: @next/swc-android-arm-eabi@12.2.0 (node_modules/@next/swc-android-arm-eabi):
-                                            npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for @next/swc-android-arm-eabi@12.2.0: wanted
-                                        </Typography>
-                                        <MotionButton
-                                            variant='contained'
-                                            fullWidth
-                                            sx={{ mt: 2 }}
-                                        >
-                                            Submit
-                                        </MotionButton>
-                                    </MotionPaper>
+                                <Grid
+                                    item
+                                    xs={12} sm={6} lg={4}
+                                    className='flex'
+                                >
+                                    <TrendingNumber> 0{i + 1} </TrendingNumber>
+                                    <Avatar sx={{ width: 10, height: 10 }} />
                                 </Grid>
                             )
                         })
                     }
                 </Grid>
-
             </Container >
         </>
     )
