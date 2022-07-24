@@ -1,0 +1,22 @@
+{
+    "/": {
+        "title": "Home | NextJs Template",
+        "desc": "welcome to homepage"
+    },
+    "/table": {
+        "title": "Table | NextJs Template",
+        "desc": "table for control panel"
+    },
+    "/form": {
+        "title": "Form | NextJs Template",
+        "desc": "custom hook useFrom() for handle a form"
+    },
+    "/control-panel": {
+        "title": "Control Panel | NextJs Template",
+        "desc": "template for control panel layout"
+    },
+    "/typography": {
+        "title": "Typography | NextJs Template",
+        "desc": "preview typography"
+    }
+}
