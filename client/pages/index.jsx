@@ -57,49 +57,51 @@ export default function Home() {
                     }
                 </Grid>
                 <Divider sx={{ my: 8 }} />
-                <Grid container spacing={2}>
-                    <Grid item md={8}>
+                <Grid container spacing={6}>
+                    <Grid item xs={12} md={8}>
                         {
                             new Array(12).fill(1).map(category => {
                                 return (
-                                    <>
+                                    <Box key={Math.random()}>
                                         <PostCard />
                                         <Divider sx={{ my: 4 }} />
-                                    </>
+                                    </Box>
                                 )
                             })
                         }
                     </Grid>
-                    <Grid item md={4}>
-                        <Typography className='font-bold'>  DISCOVER MORE OF WHAT MATTERS TO YOU </Typography>
-                        <br />
-                        <br />
-                        <Typography className='block mb-2'> Category </Typography>
-                        {
-                            new Array(12).fill(1).map(category => {
-                                return (
-                                    <Link href='/' key={Math.random()}>
-                                        <a>
-                                            <Button variant='text' sx={{ mr: 1, mb: 1 }}> category </Button>
-                                        </a>
-                                    </Link>
-                                )
-                            })
-                        }
-                        <Divider sx={{ my: 2 }} />
-                        <Typography className='block mb-2'> Tag </Typography>
-                        {
-                            new Array(12).fill(1).map(category => {
-                                return (
-                                    <Link href='/' key={Math.random()}>
-                                        <a>
-                                            <Button variant='outlined' className='rounded-full' sx={{ mr: 1, mb: 1 }}> #category </Button>
-                                        </a>
-                                    </Link>
-                                )
-                            })
-                        }
+                    <Grid item xs={12} md={4}>
+                        <Box className='sticky top-24'>
+                            <Typography className='font-bold'>  DISCOVER MORE OF WHAT MATTERS TO YOU </Typography>
+                            <br />
+                            <br />
+                            <Typography className='block mb-2'> Category </Typography>
+                            {
+                                new Array(12).fill(1).map(category => {
+                                    return (
+                                        <Link href='/' key={Math.random()}>
+                                            <a>
+                                                <Button variant='text' sx={{ mr: 1, mb: 1 }}> category </Button>
+                                            </a>
+                                        </Link>
+                                    )
+                                })
+                            }
+                            <Divider sx={{ my: 2 }} />
+                            <Typography className='block mb-2'> Tag </Typography>
+                            {
+                                new Array(12).fill(1).map(category => {
+                                    return (
+                                        <Link href='/' key={Math.random()}>
+                                            <a>
+                                                <Button variant='outlined' className='rounded-full' sx={{ mr: 1, mb: 1 }}> #category </Button>
+                                            </a>
+                                        </Link>
+                                    )
+                                })
+                            }
 
+                        </Box>
                     </Grid>
                 </Grid>
             </Container >
