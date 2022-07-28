@@ -5,10 +5,11 @@ import theme from './../styles/theme.style';
 const ThemeContext = createContext();
 
 const ThemeContextProvider = ({ children }) => {
-    const [isDarkTheme, setIsDarkTheme] = useState(false);
-    // const [isDarkTheme, setIsDarkTheme] = useState(JSON.parse(localStorage.getItem('isDarkTheme')) || false);
-
+    const [isDarkTheme, setIsDarkTheme] = useState(true);
+    
     useEffect(() => {
+        // console.log(JSON.parse(localStorage.getItem('isDarkTheme')) || false);
+        // setIsDarkTheme(JSON.parse(localStorage.getItem('isDarkTheme')) || false)
         localStorage.setItem('isDarkTheme', isDarkTheme);
     }, [isDarkTheme])
 

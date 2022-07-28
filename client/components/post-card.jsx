@@ -31,12 +31,12 @@ export default function PostCard(post) {
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat eum facere molestias omnis maxime iste ab, ipsam eos aliquid. Ipsum at accusamus voluptatibus soluta dolore consequuntur ut numquam facilis. Minima.
                 </Typography>
 
-                {/* card footer */}
+                ่{/* card foo t่er */}
                 <Stack justifyContent='space-between'>
                     <Box>
                         {
                             new Array(3).fill(1).map(category => {
-                                return <Button size='small' variant='outlined' className='mr-1 rounded-full'> #tag </Button>
+                                return <Button key={Math.random่()} size='small' variant='outlined' className='mr-1 rounded-full'> #tag </Button>
                             })
                         }
                     </Box>
